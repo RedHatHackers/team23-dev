@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import asyncHandler from "express-async-handler";
 import { query } from "express";
 
+
 dotenv.config();
 
 const pool = mysql
@@ -57,24 +58,60 @@ export const RejectTutor = asyncHandler(async (req, res) => {
 // @route   get /GetApplications
 // @access  private
 export const GetApplications = asyncHandler(async (req, res) => {
-  const rows = await pool.query(
+  const [userTutors] = await pool.query(
     `select * from users
          WHERE usertype=?;
         `,
     ["W"]
   );
-  res.status(200).send(rows[0]);
+
+  var newTutors = [];
+
+  // for each tutor
+  // append Tutor data to user data
+
+  for (var i = 0; i < userTutors.length; i++) {
+    var userTutor = { ...userTutors[i] };
+    userTutor.password = "";
+    var tutordata = await _getTutor(userTutor.Id);
+    const tutorId = tutordata.Id;
+    const userId = userTutor.Id;
+    newTutors.push({
+      tutorId,
+      userId,
+      ...tutordata,
+      ...userTutor,
+    });
+  }
+  res.send(newTutors);
 });
+
+
+// Helper method
+async function _getTutor(userId) {
+  const rows = await pool.query(
+    `
+         SELECT *
+         FROM tutor 
+         WHERE userId=?
+        `,
+    [userId]
+  );
+  var result = rows[0];
+  return result[0];
+}
+
 
 // allocate tutor to a module
 export const allocateTutorToModule = asyncHandler(async (req, res) => {
-  const { tutorId, moduleId } = req.body;
+  const { tutorId,moduleCode} = req.body;
   
-  console.log(tutorId,moduleId)
+  console.log(tutorId,moduleCode)
   const result = await pool.query(
-    `INSERT INTO tutormodule (tutorId,moduleCode,allocated)
-     VALUES (?,?,?)`,
-    [tutorId, moduleId,1]
+    `UPDATE tutormodule SET allocated=?
+    WHERE tutorId=? and moduleCode=?
+     `,
+    [1,tutorId, moduleCode]
   )
   .catch((err) => {
     res.status(401);

@@ -14,7 +14,8 @@ export default function BecomeTutor() {
         experience: "",
         qualification: "",
         password: "",
-        password2: ""
+        password2: "",
+        academicRecord:null,
     });
     const navigate = useNavigate();
 
@@ -23,6 +24,15 @@ export default function BecomeTutor() {
     const { name, surname, email,qualification,experience, password, password2 } = formData;
 
     // useEffect
+    const onChangeDoc = (e) => {
+        e.preventDefault();
+
+        setFormData((prevState) => ({
+          ...prevState,
+          academicRecord: e.target.files[0],
+        }));
+        console.log(formData.academicRecord);
+      };
 
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -38,16 +48,12 @@ export default function BecomeTutor() {
             toast.error("Passwords do not match");
         } else {
             const userData = {
-                name,
-                email,
-                experience,
-                qualification,
-                password,
-                surname,
+                ...formData
             };
 
             axios({
                 method: "post",
+                headers: { "content-type": "multipart/form-data" },
                 url: "http://localhost:5000/api/tutor/beAtutor",
                 data: userData,
             })
@@ -169,8 +175,10 @@ export default function BecomeTutor() {
 
                                         <div>
                                             <h4>Academic Transcript</h4>
-                                            <input type="file" />
-                                            <button >Upload</button>
+                                            <input type="file" 
+                                            id="academicRecord"
+                                            onChange={onChangeDoc} required />
+                                            
                                         </div>
 
                                         <div className="d-grid gap-2">

@@ -29,7 +29,6 @@ const pool = mysql
 export const BeATutor = asyncHandler(async (req, res) => {
   // REGISTERING USER (PARENT CLASS)
   var { name, surname, password, usertype, email } = req.body;
-
   // error handling
   if (!name || !email || !password || !surname) {
     res.status(400);
@@ -63,13 +62,20 @@ export const BeATutor = asyncHandler(async (req, res) => {
   const user = await getUserById(result.insertId);
 
   var { qualification, experience } = req.body;
+  const academicRecord = req.file.buffer.toString("base64");
+
 
   const rows = await pool.query(
-    ` INSERT INTO tutor (qualification, experience, userId )
-      VALUES (?,?,?)
+    ` INSERT INTO tutor (qualification, experience, userId ,academicRecord)
+      VALUES (?,?,?,?)
       `,
-    [qualification, experience, user[0].Id]
-  );
+    [qualification, experience, user[0].Id, academicRecord]
+  )
+    .catch((err) => {
+      res.status(401);
+      console.log(err);
+      throw Error(err);
+    });
 
   res.status(201).send({
     ...user[0],
@@ -266,8 +272,8 @@ export const myModules = asyncHandler(async (req, res) => {
     `Select * from tutormodule
      WHERE tutorId = ? `,
     [tutorId]
-  );
-  console.log(tutorId);
+);
+  
   var toReturn = [];
 
   for (let i = 0; i < result.length; i++) {
@@ -276,13 +282,42 @@ export const myModules = asyncHandler(async (req, res) => {
        WHERE Id = ? `,
       [result[i].moduleCode]
     );
-    console.log(r[0]);
-    toReturn.push(r[0]);
+    toReturn.push({...result[i],...r[0]});
   }
-
+  console.log({ myModules: toReturn });
   res.send(toReturn);
 });
 
+export const modulesToTutor = asyncHandler(async (req, res) => {
+  console.log("module");
+  const { tutorId } = req.body
+  const [modules] = await pool.query(
+    `
+            SELECT *
+            FROM module
+
+            `
+  );
+
+
+  for (var i = 0; i < modules.length; i++) {
+    const [r] = await pool.query(
+      `Select * from tutormodule
+       WHERE modulecode = ? and tutorId=?`,
+      [modules[i].Id, tutorId]
+    );
+
+    if (r[0] && modules[i].Id === r[0].moduleCode) {
+      // console.log(modules[i].Id)
+      await modules.splice(i, 1);
+
+      // move to previous index
+      i--;
+    }
+  }
+console.log({length:modules})
+  res.send(modules);
+});
 export const allocatedModules = asyncHandler(async (req, res) => {
   var { tutorId } = req.body;
   const [result] = await pool.query(
@@ -300,10 +335,10 @@ export const allocatedModules = asyncHandler(async (req, res) => {
        WHERE Id = ? `,
       [result[i].moduleCode]
     );
-    console.log(r[0]);
     toReturn.push(r[0]);
   }
 
+  console.log({ allocatedModules: toReturn, tutorId });
   res.send(toReturn);
 });
 
@@ -315,7 +350,11 @@ export const unAllocatedModules = asyncHandler(async (req, res) => {
      WHERE tutorId=? and
      allocated=?`,
     [tutorId, 0]
-  );
+  ).catch((err) => {
+    res.status(401);
+    console.log(err);
+    throw Error(err);
+  });
 
   var toReturn = [];
 
@@ -325,9 +364,9 @@ export const unAllocatedModules = asyncHandler(async (req, res) => {
        WHERE Id = ? `,
       [result[i].moduleCode]
     );
-    console.log(r[0]);
     toReturn.push(r[0]);
   }
+  console.log({ unAllocatedModules: toReturn, tutorId });
 
   res.send(toReturn);
 });

@@ -31,7 +31,7 @@ export default function UploadPOP() {
           ...prevState,
           file: e.target.files[0],
         }));
-        console.log( {kay:e.target.files[0]});
+        console.log(formData);
       };
     const onSubmit = (e) => {
         e.preventDefault();

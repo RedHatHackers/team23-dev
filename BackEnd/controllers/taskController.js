@@ -25,15 +25,15 @@ const pool = mysql
 // @route   POST /Tutor Add task
 // @access  private
 export const TutAddTask = asyncHandler(async (req, res) => {
-  var { code, tutorId, title, duedate } = req.body;
+  var { code, tutorId,total, title, duedate } = req.body;
   const taskDocument = req.file.buffer.toString("base64");
   console.log({ code, tutorId, title, duedate });
   duedate = new Date(duedate);
   const [rows] = await pool
     .query(
-      `INSERT INTO tasks (moduleCode, tutorID, title, duedate, taskDocument)
-       VALUES  (?,?,?,?,?)`,
-      [code, tutorId, title, duedate, taskDocument]
+      `INSERT INTO tasks (moduleCode, tutorID, title, duedate, taskDocument,total)
+       VALUES  (?,?,?,?,?,?)`,
+      [code, tutorId, title, duedate, taskDocument,total]
     )
     .catch((err) => {
       res.status(401);
@@ -71,7 +71,7 @@ export const getTask = asyncHandler(async (req, res) => {
   const [result] = await pool
     .query(
       `Select * from tasks
-    where tutorId=? and moduleCode=? and taskId=?
+       where tutorId=? and moduleCode=? and taskId=?
    `,
       [tutorId, moduleCode, taskId]
     )
@@ -91,8 +91,8 @@ export const getTaskById = asyncHandler(async (req, res) => {
   const [result] = await pool
     .query(
       `Select * from tasks
-      taskId=?
-   `,
+       taskId=?
+      `,
       [taskId]
     )
     .catch((err) => {

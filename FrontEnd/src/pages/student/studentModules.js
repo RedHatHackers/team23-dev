@@ -4,7 +4,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { getModule } from "../../localstorage/module";
 import { setTutor } from "../../localstorage/tutor";
-
+import "../chat.css";
 export default function StudentModule() {
   const module = getModule();
   const [userData, setUserdata] = useState([]);
@@ -54,7 +54,7 @@ export default function StudentModule() {
             <a
               className="btn btn-success  btn-lg btn-block "
               href={url + "/uploadDoc"}
-              //   onClick={onSubmit}
+            //   onClick={onSubmit}
             >
               Upload Documents
             </a>
@@ -62,7 +62,7 @@ export default function StudentModule() {
               className="btn btn-success btn-lg btn-block"
               href={url + "/studentassessment"}
 
-              //   onClick={onSubmit}
+            //   onClick={onSubmit}
             >
               Assignment and Tests
             </a>
@@ -72,7 +72,7 @@ export default function StudentModule() {
               type="submit"
               //   onClick={onSubmit}
               href="https://calendly.com/synattutorsbookings"            >
-              Book consultation 
+              Book consultation
             </a>
             <a
               className="btn btn-success btn-lg btn-block"
@@ -80,15 +80,23 @@ export default function StudentModule() {
               //   onClick={onSubmit}
               href={url + "/joinclass"}
             >
-             join zoom/google meeting
+              join zoom/google meeting
             </a>
-            <button
+            <a
               className="btn btn-success btn-lg btn-block"
               type="submit"
               //   onClick={onSubmit}
+              href={"/chat"}
+            >
+              Chats
+            </a>
+            <a
+              className="btn btn-success btn-lg btn-block"
+              href="/MyPerfomance"
+              //   onClick={onSubmit}
             >
               My Performance
-            </button>
+            </a>
           </div>
         </div>
       </div>

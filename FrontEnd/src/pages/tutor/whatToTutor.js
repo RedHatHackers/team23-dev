@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { getTutor } from "../../localstorage/tutor";
 export default function WhatToTutor() {
   const [userData, setUserdata] = useState([]);
+  const tutor = getTutor()
   useEffect(() => {
     const getUserdata = async () => {
-
-      axios.get("http://localhost:5000/api/module").then((res) => {
+      setUserdata([]);
+      axios({
+        method: "post",
+        url: "http://localhost:5000/api/tutor/modulesToTutor",
+        data: {
+          tutorId: tutor.Id,
+        },
+      }).then((res) => {
         setUserdata(res.data);
       });
 
@@ -21,8 +29,8 @@ export default function WhatToTutor() {
       method: "post",
       url: "http://localhost:5000/api/tutor/addModule",
       data: {
-        userId: localStorage.getItem("userId"),
-        moduleId: e.target.id,
+        tutorId: tutor.Id,
+        moduleCode: e.target.id,
       },
     })
       .then((res) => {
@@ -51,7 +59,7 @@ export default function WhatToTutor() {
                     <div className="cardName">{getmod.name}</div>
                     <div className="cardName">{getmod.description}</div>
                     <div className="cardName">{getmod.code}</div>
-                    
+
                   </div>
 
                   <div className="iconBx">

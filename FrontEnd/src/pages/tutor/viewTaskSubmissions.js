@@ -64,6 +64,7 @@ export default function ViewTaskSubmissions() {
                 <th scope="col">Document</th>
 
                 <th scope="col">Date Submitted</th>
+                <th scope="col">Mark</th>
                 <th scope="col">view</th>
               </tr>
             </thead>
@@ -83,6 +84,7 @@ export default function ViewTaskSubmissions() {
                     </a>
                   </td>
                   <td>{submission._date}</td>
+                  <td>{submission.mark}/{task.total}</td>
                   <td>
                     <a
                       href="/viewsinglesubmission"

@@ -13,7 +13,9 @@ function Sidebar(props) {
   };
 
   return (
+    
     <div className="mx-auto">
+      
       <nav className="navigation ">
         <ul>
           <li>

@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { findModule, setModule } from "../../localstorage/module";
+import { findModule, getModule, setModule } from "../../localstorage/module";
 export default function TutorFunctions() {
   const [userData, setUserdata] = useState([]);
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function TutorFunctions() {
   }, []);
 
   const { module } = useParams();
-  const _module = findModule(module)
+  const _module = getModule()
   setModule(_module);
   const url = module;
   return (
@@ -54,6 +54,14 @@ export default function TutorFunctions() {
               //   onClick={onSubmit}
             >
               Issue Class
+            </a>
+            <a
+              className="btn btn-success btn-lg btn-block"
+              href={"/tchat"}
+              type= "submit"
+                // onClick={onSubmit}
+            >
+              Chat
             </a>
           </div>
         </div>

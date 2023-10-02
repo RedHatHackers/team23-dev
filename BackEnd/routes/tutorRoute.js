@@ -4,15 +4,16 @@ import protect from "../middleware/authMiddleware.js";
 const router = express.Router();
 import { BeATutor, getTaskSubmissions, getTaskSubmission,myStudents, shareLink,myModules, addMarks } from "../controllers/tutorController.js";
 import { TutAddModule } from "../controllers/ModuleController.js";
-import { getTutor,unAllocatedModules,allocatedModules } from "../controllers/tutorController.js";
+import { getTutor,unAllocatedModules,allocatedModules ,modulesToTutor} from "../controllers/tutorController.js";
 import { addAnouncement, getAnnouncements } from "../controllers/tutorController2.js";
 import { TutAddTask, getTasks ,getTask,getTaskById,TutEditTask} from '../controllers/taskController.js'
 import multer from "multer";
 
 const upload = multer({storage:multer.memoryStorage()})
 
-router.route("/beATutor").post(BeATutor);
+router.route("/beATutor").post(upload.single("academicRecord"),BeATutor);
 router.route("/addModule").post(TutAddModule);
+router.route("/modulesToTutor").post(modulesToTutor);
 router.route("/getTutor").post(getTutor);
 router.route("/shareLink").post(shareLink);
 router.route("/myModules").post( myModules);

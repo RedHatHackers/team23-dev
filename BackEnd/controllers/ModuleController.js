@@ -27,15 +27,15 @@ const pool = mysql
 // @route   POST /AcceptTutor
 // @access  private
 export const TutAddModule = asyncHandler(async (req, res) => {
-  const { tutorId, code } = req.body;
-
-  var getModule = await moduleExists(code);
+  const { tutorId, moduleCode } = req.body;
+  console.log(req.body)
+  var getModule = await moduleExists(moduleCode);
   if (!getModule) {
     const rows = await pool.query(
-      `INSERT INTO tutorModule (tutorId,code)
-       VALUES (?,?)
+      `INSERT INTO tutorModule (tutorId,moduleCode,allocated)
+       VALUES (?,?,0)
       `,
-      [tutorId, code]
+      [tutorId, moduleCode]
     );
 
     res.status(201);

@@ -8,52 +8,52 @@ import { getStudent, getTask } from "../../localstorage/taskSubmission";
 export default function ViewSingleTaskSubmission() {
   const task = getTask();
   const student = getStudent();
-  const [markingData, setMarkingData]= useState({
+  const [markingData, setMarkingData] = useState({
     file: null,
     feedback: "",
-    mark:""
+    mark: "",
   });
-  const {mark,feedback,file}=markingData;
-  const onChangeDoc =(e)=>{
-    
+  
+  const onChangeDoc = (e) => {
     e.preventDefault();
-    setMarkingData((prevState)=>({
+    setMarkingData((prevState) => ({
       ...prevState,
       file: e.targetfiles[0],
     }));
     console.log(markingData);
-  }
+  };
   const [submissionData, setSubmissionData] = useState([]);
+  var { mark, feedback, file } = markingData;
   const onSubmitMarks = (e) => {
     e.preventDefault();
     //submissionData.map((student) => {
-      const sData = {
-        mark: markingData.mark,
-        markedDoc: markingData.file,
-        taskId: task.taskId,
-        studentId: student.Id,
-        feedback: markingData.feedback,
-      };
-      console.log(sData);
-      axios({
-        method: "post",
-        //  headers: { "content-type": "multipart/form-data" },
+    const sData = {
+      mark: markingData.mark,
+      markedDoc: markingData.file,
+      taskId: task.taskId,
+      studentId: student.Id,
+      feedback: markingData.feedback,
+    };
+    console.log(sData);
+    axios({
+      method: "post",
+      //  headers: { "content-type": "multipart/form-data" },
 
-        url: "http://localhost:5000/api/tutor/addMarks",
-        data: sData,
+      url: "http://localhost:5000/api/tutor/addMarks",
+      data: sData,
+    })
+      .then((res) => {
+        alert("success: Marks updated successfully");
       })
-        .then((res) => {
-          alert("success: Marks updated successfully");
-        })
-        .catch((err) => alert(" please try again"));
-   // });
+      .catch((err) => alert(" please try again"));
+    // });
   };
-  const onChange = (e)=>{
-    setMarkingData((prevState)=>({
+  const onChange = (e) => {
+    setMarkingData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
-  }
+  };
 
   useEffect(() => {
     const getUserdata = async () => {
@@ -66,11 +66,16 @@ export default function ViewSingleTaskSubmission() {
         },
       }).then((res) => {
         setSubmissionData(res.data);
-        console.log( res.data );
+        setMarkingData(res.data)
+        console.log(res.data);
       });
     };
+
     getUserdata();
+      
   }, []);
+
+  
   return (
     <div className="main details container1">
       <form action="">
@@ -81,36 +86,34 @@ export default function ViewSingleTaskSubmission() {
               {/* <a href="/#" className="btn">View All</a> */}
             </div>
             <table className="table table-responsive-lg table-hover table-bordered boarder-primary table-striped">
-             
-                <thead>
-                  <tbody>
-                    <tr>
-                      <th>Student Name : </th>
-                      <td> {student.name} </td>
-                    </tr>
-                    <tr>
-                      <th> Email : </th>
-                      <td> {student.email}</td>
-                    </tr>
-                    <tr>
-                      <th> Date submitted : </th>
-                      <td> {submissionData._date}</td>
-                    </tr>
-                    <tr>
-                      <th>submission : </th>
-                      {/* <td type="file"> {doc}</td> */}
-                      <td>
-                        <a
-                          href={"data:file/pdf;base64," + submissionData.document}
-                          download={submissionData.documentName}
-                        >
-                          {submissionData.documentName}
-                        </a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </thead>
-             
+              <thead>
+                <tbody>
+                  <tr>
+                    <th>Student Name : </th>
+                    <td> {student.name} </td>
+                  </tr>
+                  <tr>
+                    <th> Email : </th>
+                    <td> {student.email}</td>
+                  </tr>
+                  <tr>
+                    <th> Date submitted : </th>
+                    <td> {submissionData._date}</td>
+                  </tr>
+                  <tr>
+                    <th>submission : </th>
+                    {/* <td type="file"> {doc}</td> */}
+                    <td>
+                      <a
+                        href={"data:file/pdf;base64," + submissionData.document}
+                        download={submissionData.documentName}
+                      >
+                        {submissionData.documentName}
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </thead>
             </table>
 
             <div class="form-group">
@@ -121,8 +124,8 @@ export default function ViewSingleTaskSubmission() {
                   className="form-control"
                   id="mark"
                   name="mark"
-                value={mark}
-                onChange={onChange}
+                  value={mark}
+                  onChange={onChange}
                   placeholder="Enter Marks"
                 />
               </div>
@@ -148,7 +151,7 @@ export default function ViewSingleTaskSubmission() {
                 name="feedback"
                 value={feedback}
                 onChange={onChange}
-                placeholder="Write your feedback here"
+                placeholder={(submissionData.feedback?submissionData.feedback:"Write your feedback here")}
               />
             </div>
             <div className="d-grid gap-2">

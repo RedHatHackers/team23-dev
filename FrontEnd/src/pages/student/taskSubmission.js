@@ -11,7 +11,11 @@ export default function UploadTask() {
     var [formData, setFormData] = useState({
       studentId: localStorage.getItem("userId"),
       taskId: task.taskId,
-      date: new Date(),
+      date: new Date(Date.now()).getDay()+ "-" +
+            new Date(Date.now()).getMonth()+"-"+
+            new Date(Date.now()).getFullYear()+"  "+
+            new Date(Date.now()).getHours()+ " : " + 
+            new Date(Date.now()).getMinutes(),
       document: "",
       documentName: "",
       //document

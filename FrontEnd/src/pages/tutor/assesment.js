@@ -19,11 +19,12 @@ export default function PostTask() {
     moduleName: module.name,
     duedate: "",
     taskDocument: "",
+    total:null
     //document
   });
 
   const taskCount = 0;
-  const { title, taskDocument, moduleName, duedate } = formData;
+  const { title,total, taskDocument, moduleName, duedate } = formData;
   const [useData, setUserData] = useState([]);
 
   const [taskData, setTaskData] = useState([]);
@@ -113,10 +114,10 @@ export default function PostTask() {
                       <div className="form-outline mb-4">
                         <input
                           type="text"
-                          id="title"
-                          value={title}
-                          name="title"
-                          placeholder="Assessment Title"
+                          id="total"
+                          value={total}
+                          name="total"
+                          placeholder="Assessment Total"
                           className="form-control form-control-lg"
                           onChange={onChange}
                           required

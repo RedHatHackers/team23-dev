@@ -11,7 +11,7 @@ import { findModule, setModule } from "../../localstorage/module";
 export default function EditTask() {
   const [taskData, setTaskData] = useState({ ...getTask() });
 
-  const { title, taskDocument, moduleName, duedate } = taskData;
+  const { title, total,taskDocument, moduleName, duedate } = taskData;
 
   const onChangeDoc = (e) => {
     setTaskData((prevState) => ({
@@ -116,6 +116,18 @@ export default function EditTask() {
                           value={title}
                           name="title"
                           placeholder="Assessment Title"
+                          className="form-control form-control-lg"
+                          onChange={onChange}
+                          required
+                        />
+                      </div>{" "}
+                      <div className="form-outline mb-4">
+                        <input
+                          type="number"
+                          id="total"
+                          value={total}
+                          name="total"
+                          placeholder="Assessment total"
                           className="form-control form-control-lg"
                           onChange={onChange}
                           required

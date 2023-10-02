@@ -21,7 +21,7 @@ import {
      getTasks,
       postSubmission,
       getMySubmission,
-      getLink
+      getLink,MyPerfomance
   
 } from "../controllers/userController.js";
 import multer from "multer";
@@ -53,6 +53,6 @@ router.route("/getPop").post(studentGetPOP);
 router.route("/submitTask").post(upload.single('document'),postSubmission);
 
 router.route("/getMySubmission").post(getMySubmission);
-
+router.route("/MyPerfomance").post(MyPerfomance);
 router.route("/upload").post( uploadDoc);
 export default router;

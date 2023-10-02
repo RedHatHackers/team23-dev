@@ -146,7 +146,7 @@ export const getMe = asyncHandler(async (req, res) => {
       console.log(err);
       throw Error(err);
     });
-console.log(result[0])
+  console.log(result[0]);
   res.status(200).send(result[0]);
 });
 
@@ -349,13 +349,13 @@ export const studentGetPOP = asyncHandler(async (req, res) => {
 });
 
 export const getLink = asyncHandler(async (req, res) => {
-  var { tutorId,moduleCode } = req.body;
+  var { tutorId, moduleCode } = req.body;
 
   const [rows] = await pool.query(
     `SELECT * FROM class
     WHERE tutorId=? and moduleCode=?
     `,
-    [tutorId,moduleCode]
+    [tutorId, moduleCode]
   );
   res.send(rows);
 });
@@ -372,7 +372,7 @@ export const getTutorByIdCode = asyncHandler(async (req, res) => {
   const Id = rows[0].tutorID;
 
   // return {} if Id is nothing
-  const tutor = (!Id ? {} : await getTutorById(Id));
+  const tutor = !Id ? {} : await getTutorById(Id);
   res.status(200).send(tutor);
 });
 
@@ -406,23 +406,31 @@ export const postSubmission = asyncHandler(async (req, res) => {
       console.log(err);
       throw Error(err);
     });
-  console.log(rows);
+
   res.status(201).send(rows[0]);
 
   return;
-
 });
-
-
 
 export const getMySubmission = asyncHandler(async (req, res) => {
   console.log("mysubmission");
   const { taskId, studentId } = req.body;
-  const [result] = await pool
+
+  const result = await _getMySubmission(taskId, studentId).catch((err) => {
+    res.status(401);
+    console.log(err);
+    throw Error(err);
+  });
+
+  res.send(result);
+});
+
+export const _getMySubmission = asyncHandler(async (taskId, studentId) => {
+  const [task] = await pool
     .query(
       `Select * from tasksubmission
-    where studentId=? and taskId=?
-   `,
+       where studentId=? and taskId=?
+ `,
       [studentId, taskId]
     )
     .catch((err) => {
@@ -431,5 +439,25 @@ export const getMySubmission = asyncHandler(async (req, res) => {
       throw Error(err);
     });
 
-  res.send(result);
+  return task;
+});
+export const MyPerfomance = asyncHandler(async (req, res) => {
+  const { moduleCode, tutorId, studentId } = req.body;
+  const [rows] = await pool.query(
+    `select * from tasks
+     WHERE  tutorID = ? and moduleCode
+     `,
+    [tutorId, moduleCode]
+  );
+
+  var tasks = rows;
+  var performance = [];
+
+  for (var i = 0; i < tasks.length; i++) {
+   var [task] = await _getMySubmission(tasks[i].taskId,studentId) 
+
+  await  performance.push({task:tasks[i],submission:task})
+
+  }
+  res.send(performance);
 });
