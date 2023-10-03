@@ -5,17 +5,17 @@ import axios from "axios";
 import ViewApplication from "../manager/viewApplication";
 
 export default function TutorApplications() {
-
   const [userData, setUserdata] = useState([]);
 
   useEffect(() => {
     const getUserdata = async () => {
-
-      axios.get("http://localhost:5000/api/manager/getApplications").then((res) => {
-        setUserdata(res.data);
-        console.log(res.data[0])
-        console.log(res)
-      });
+      axios
+        .get("http://localhost:5000/api/manager/getApplications")
+        .then((res) => {
+          setUserdata(res.data);
+          console.log(res.data[0]);
+          console.log(res);
+        });
 
       // Applications
     };
@@ -45,13 +45,13 @@ export default function TutorApplications() {
                     {/* <a href="/#" className="btn">View All</a> */}
                   </div>
 
-                  <table >
+                  <table>
                     <thead>
                       <tr>
-                        <td > Name</td>
-                        <td > Surname</td>
-                        <td >Email</td>
-                        <td >Action</td>
+                        <td> Name</td>
+                        <td> Surname</td>
+                        <td>Email</td>
+                        <td>Action</td>
                       </tr>
                     </thead>
 
@@ -61,12 +61,13 @@ export default function TutorApplications() {
                           <td>{getAppliedTutors.name}</td>
                           <td>{getAppliedTutors.surname}</td>
                           <td>{getAppliedTutors.email}</td>
-                          <a href={"/viewApplication/" + getAppliedTutors.email}><td>View Application</td></a>
+                          <a
+                            href={"/viewApplication/" + getAppliedTutors.email}
+                          >
+                            <td>View Application</td>
+                          </a>
                         </tr>
-
-
                       ))}{" "}
-
                     </tbody>
                   </table>
                 </div>

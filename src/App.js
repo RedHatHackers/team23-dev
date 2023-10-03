@@ -26,6 +26,8 @@ import ViewApplication from "./pages/manager/viewApplication";
 import StudentPayments from "./pages/manager/studentPayment";
 import SynatTutors from "./pages/manager/myTutors";
 import AddModule from "./pages/manager/addModules.js";
+import ManagerProfile from "./pages/manager/manProfile.js";
+
 import Modules from "./pages/manager/modules";
 import UpdateModule from "./pages/manager/updateModule";
 import EditModule from "./pages/manager/editModule";
@@ -33,7 +35,6 @@ import ManageModule from "./pages/manager/addModules";
 import TutorApplication from "./pages/manager/tutorApplications";
 import RegisterUser from "./pages/manager/registerUsers";
 import ManagerStats from "./pages/manager/stats.js";
-
 
 import TutorClass from "./pages/tutor/myClass";
 import WHatToTutor from "./pages/tutor/whatToTutor";
@@ -62,6 +63,7 @@ import Tests from "./tests";
 import MyProfile from "./pages/student/studentProfile";
 import EditTask from "./pages/tutor/editTask.js";
 import MyPerfomance from "./pages/student/myPerfomance.js";
+import AnnouncementDetails from "./pages/student/announcementDetails.js";
 
 function App() {
   return (
@@ -78,15 +80,11 @@ function App() {
                 path="/noticeboard"
                 exact
               />
-              <Route
-                element={<Layout Centre={ChatApp} />}
-                path="/chat"
-              ></Route>
+              <Route element={<Layout Centre={ChatApp} />} path="/chat"></Route>
               <Route
                 element={<Layout Centre={StudentClass} />}
                 path="/classes"
               />
-
 
               <Route element={<Layout Centre={Profile} />} path="/myprofile" />
               <Route element={<Layout Centre={Offered} />} path="/offered" />
@@ -116,9 +114,14 @@ function App() {
                 path="/classes/:module/joinclass"
               />
 
-<Route
+              <Route
                 element={<Layout Centre={MyPerfomance} />}
                 path="/MyPerfomance"
+              />
+
+<Route
+                element={<Layout Centre={AnnouncementDetails} />}
+                path="/announcementDetails"
               />
             </Route>
           }
@@ -126,10 +129,13 @@ function App() {
           {
             // Manager routes
             <Route element={<ManagerRoutes />}>
+
               <Route
                 element={<ManagerSidenav MCentre={RegisterUser} />}
                 path="/reguser"
               />
+               <Route element={<ManagerSidenav MCentre={ManagerProfile} />} path="/myMprofile" />
+
               <Route
                 element={<ManagerSidenav MCentre={ChatApp} />}
                 path="/mChat"
@@ -185,7 +191,7 @@ function App() {
                 path="/tutorclass"
               />
               <Route
-                element={<Sidenav TCentre={MyProfile} />}
+                element={<Sidenav TCentre={TutorProfile} />}
                 path="/tutorprofile"
               />
               <Route
@@ -233,17 +239,14 @@ function App() {
                 element={<Sidenav TCentre={ChatApp} />}
                 path="/tChat"
               ></Route>
-              <Route element={<Sidenav TCentre={EditTask} />}
-                path="/editTask"></Route>
-            </Route>
-
-          }
-
-          {
-            <Route element={<PrivateRoutes />}>
-
+              <Route
+                element={<Sidenav TCentre={EditTask} />}
+                path="/editTask"
+              ></Route>
             </Route>
           }
+
+          {<Route element={<PrivateRoutes />}></Route>}
 
           {
             // public routes

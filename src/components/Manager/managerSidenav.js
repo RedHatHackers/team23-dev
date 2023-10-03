@@ -2,7 +2,7 @@ import React from "react";
 import { removeProfile } from "../../actions/userActions";
 import { connect } from "react-redux";
 import "../sdashboard.css";
-
+import LogoSvgSynat from "../img/logo.jpeg";
 function Sidenav(props) {
   const MCentre = props.MCentre;
   const onclick = () => {
@@ -12,32 +12,20 @@ function Sidenav(props) {
     <div className="mx-auto ">
       <nav className="navigation">
         <ul>
-          <li>
-            <a href="/tutorhome">
-              <img className="imgbox"
-                src="public/imgs/logo.jpeg"
-                href="/home"
-                alt="">
-
-              </img>
-              <h1 className="title"><a href="/home">SYNAT</a></h1>
-
+        <a href="/tutorhome">
+            <img src={LogoSvgSynat} 
+            alt="SYNAT"
+            width="150" 
+            height="100"/>
             </a>
-          </li>
+            <br/>
 
-          <li>
-            <a href="/#">
-              <span className="icon">
-                <ion-icon name="home-outline"></ion-icon>
-              </span>
-              <span className="title">Home</span>
-            </a>
-          </li>
 
-          <li>
+
+          <li className="bi bi-person-plus">
             <a href="/tutorapplication">
               <span className="icon">
-                <ion-icon name="signature-outline"></ion-icon>
+                <ion-icon name="person-add-outline"></ion-icon>
               </span>
               <span className="title">Tutor Applications</span>
             </a>
@@ -61,14 +49,14 @@ function Sidenav(props) {
           <li>
             <a href="/reguser">
               <span className="icon">
-                <ion-icon name="cloud-plus-outline"></ion-icon>
+                <ion-icon name="add-circle-outline"></ion-icon>
               </span>
               <span className="title"> Register Users</span>
             </a>
           </li>
 
           <li>
-            <a href="/#">
+            <a href="/myMprofile">
               <span className="icon">
                 <img src="public/imgs/customer01.jpg" alt="" />
                 <ion-icon name="person-outline"></ion-icon>
@@ -79,9 +67,17 @@ function Sidenav(props) {
           <li>
             <a href="/studentpayments">
               <span className="icon">
-                <ion-icon name="signature-outline"></ion-icon>
+                <ion-icon name="cash-outline"></ion-icon>
               </span>
               <span className="title">Students Payments</span>
+            </a>
+          </li>
+          <li>
+            <a href="/stats">
+              <span className="icon">
+                <ion-icon name="bar-chart-outline"></ion-icon>
+              </span>
+              <span className="title">Reports</span>
             </a>
           </li>
           <li>

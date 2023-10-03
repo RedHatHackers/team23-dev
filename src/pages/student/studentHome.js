@@ -1,8 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import "./sdashboard.css";
+import axios from "axios";
+import { NavLink, useHref } from "react-router-dom";
+import { setAnnouncement } from "../../localstorage/announcement";
 
 export default function Home() {
+  const [announcementData, setAnnouncementData] = useState([]);
+  const [moduleData, setModuleDataData] = useState([]);
+  const [tutorData, setTutorDataData] = useState([]);
+  useEffect(() => {
+    const fetchAnnouncements = () => {
+      axios({
+        method: "post",
+        // headers: { "content-type": "multipart/form-data" },
+
+        url: "http://localhost:5000/api/users/myAnnouncement",
+        data: { studentId: localStorage.getItem("userId") },
+      })
+        .then((res) => {
+          setAnnouncementData(res.data);
+        })
+        .catch((err) => alert(" please try again"));
+    };
+    fetchAnnouncements();
+  }, []);
+  console.log({ kay: announcementData[0] });
   return (
     <div className="">
       {/* <!-- ========================= Main ==================== --> */}
@@ -19,7 +42,7 @@ export default function Home() {
         <div className="details" style={{ backgroundColor: "#c0e0c1" }}>
           <div className="recentOrders">
             <div className="cardHeader">
-              <h2>Recent Updates</h2>
+              <h2>Announcements</h2>
               {/* <a href="/#" className="btn">View All</a> */}
             </div>
 
@@ -29,46 +52,19 @@ export default function Home() {
                   <td>Tutor</td>
                   <td>Module</td>
                   <td>Heading</td>
-                  <td>Status</td>
                 </tr>
               </thead>
 
               <tbody>
-                <tr>
-                  <td>Mr KM Hlako</td>
-                  <td>Maths</td>
-                  <td>Marks out</td>
-                  <td>
-                    <span className="status delivered">Delivered</span>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>Mr MP Mahlangu</td>
-                  <td>Infos</td>
-                  <td>Assignment Due</td>
-                  <td>
-                    <span className="status pending">Pending</span>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>Mr KG Makgota</td>
-                  <td>Statistics</td>
-                  <td>Revision Tomorrow</td>
-                  <td>
-                    <span className="status return">Return</span>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>MW Seleka</td>
-                  <td>Geography</td>
-                  <td>friendly Announcement</td>
-                  <td>
-                    <span className="status inProgress">In Progress</span>
-                  </td>
-                </tr>
+                {announcementData.map((announcement) => (
+                  <tr>
+                    <td>{announcement.tutor}</td>
+                    <td>{announcement.module}</td>
+                    <td>
+                      <a onClick={()=>{setAnnouncement(announcement)}} href="/announcementDetails">{announcement.announceHeading}</a>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

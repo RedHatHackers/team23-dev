@@ -64,7 +64,7 @@ return (
       style={{ paddingLeft: "30" }}
     >
       <div className="cardHeader">
-      <h2 className="mb-5">Paid Modules</h2>
+      <h2 className="mb-5">My Modules</h2>
       </div>
       <div className=" d-grid gap-2  ">
         <div className="cardHeader">
@@ -81,26 +81,12 @@ return (
                   <div className="iconBx">
                     <ion-icon name="laptop-outline"></ion-icon>
                   </div>
+
+
                 </div>
               </a>
             ))}
-          </div>
-        </div>
-      </div>
-    </div>
- 
-    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-    <div
-      className="main class p-5 text-center center-block "
-      style={{ paddingLeft: "30" }}
-    >
-     <div className="cardHeader ">
-      <h2 className="mb-5">Unpaid Modules</h2>
-      </div>
-      <div className=" d-grid gap-2  ">
-        <div className="cardHeader">
-          <div className="cardBox">
-            {unpaidData.map((getmod) => (
+              {unpaidData.map((getmod) => (
               <a href="/uploadpop/" onClick={() => { setModulePop(getmod) }}
               >
                 <div className="card">
@@ -121,6 +107,8 @@ return (
         </div>
       </div>
     </div>
+ 
+    
   </React.Fragment>
 );
 }

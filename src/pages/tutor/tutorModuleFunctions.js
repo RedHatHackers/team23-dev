@@ -55,14 +55,14 @@ export default function TutorFunctions() {
             >
               Issue Class
             </a>
-            <a
+            {/* <a
               className="btn btn-success btn-lg btn-block"
               href={"/tchat"}
               type= "submit"
                 // onClick={onSubmit}
             >
               Chat
-            </a>
+            </a> */}
           </div>
         </div>
       </div>

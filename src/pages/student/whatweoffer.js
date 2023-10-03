@@ -6,7 +6,13 @@ export default function Whatweoffer() {
   useEffect(() => {
     const getUserdata = async () => {
 
-      axios.get("http://localhost:5000/api/module").then((res) => {
+      axios({
+        method: "post",
+        // headers: { "content-type": "multipart/form-data" },
+     
+         url: "http://localhost:5000/api/users/AvailableModules",
+         data: { studentId : localStorage.getItem("userId")},
+      }).then((res) => {
         setUserdata(res.data);
       });
      

@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import { getTutor } from "../../localstorage/tutor";
 import { getModule } from "../../localstorage/module";
 
-
 export default function JoinClass() {
   const module = getModule();
   const tutor = getTutor();
@@ -14,9 +13,9 @@ export default function JoinClass() {
     tutorId: tutor.tutorId,
     sessionName: "",
     classDate: "",
-    classLink: ""
+    classLink: "",
   });
-  const { sessionName, classDate, classLink} = formData;
+  const { sessionName, classDate, classLink } = formData;
   const [classData, setClassData] = useState([]);
 
   useEffect(() => {
@@ -25,7 +24,6 @@ export default function JoinClass() {
         tutorId: tutor.tutorId,
         moduleCode: module.Id,
       };
-
       axios({
         method: "post",
         url: "http://localhost:5000/api/users/getLink",
@@ -33,61 +31,61 @@ export default function JoinClass() {
       })
         .then((res) => {
           setClassData(res.data);
-          console.log(res.data);
+          // console.log(res.data);
         })
         .catch((err) => console.log(err));
+        console.log(data+ "tutor and module data");
+
     };
+
     getClass();
   }, []);
 
-
-
   return (
- 
     <div className="">
-    <div className="main p-5 text-center">
-      <div>
-        <div className="">
-        <div className="cardHeader">
-              <h2>Attend Your {module} classes</h2>
-             </div>
-          <br />
-          <br />
-          <br />
+      <div className="main p-5 text-center">
+        <div>
+          <div className="">
+            <div className="cardHeader">
+              <h2>Attend Your {module.name} classes</h2>
+            </div>
+            <br />
+            <br />
+            <br />
 
-         
+            <table class="table min-width">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Session</th>
+                  <th>Date and Time</th>
+                  <th>Link To Class</th>
+                </tr>
+              </thead>
+              <tbody>
+                {classData.map((joinclass) => (
+                  <tr>
+                    <th>1</th>
+                    <td>{joinclass.sessionName}</td>
 
-          <table class="table min-width">
-            <thead>
-             
-              <tr>
-                <th>#</th>
-                <th>Session</th>
-                <th>Date and Time</th>
-                <th>Link To Class</th>
-              </tr>
-            </thead>
-            <tbody>
-           
-              {classData.map((joinclass)=>(
-                   <tr>
-                <th>1</th>
-                <td>{joinclass.sessionName}</td>
-
-                <td>{joinclass.classDate}</td>
-                <td>
-                <a href={joinclass.classLink} type="button" 
-                className="me-5  btn btn-primary pull-left" 
-                onclick="check()">Join Class</a>
-                </td>
-              
-              </tr>
+                    <td>{joinclass.classDate}</td>
+                    <td>
+                      <a
+                        href={joinclass.classLink}
+                        type="button"
+                        className="me-5  btn btn-primary pull-left"
+                        onclick="check()"
+                      >
+                        Join Class
+                      </a>
+                    </td>
+                  </tr>
                 ))}
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   );
 }

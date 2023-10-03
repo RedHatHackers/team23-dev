@@ -4,6 +4,9 @@ import { userReducer } from "../reducers/userReducer";
 import { removeProfile } from "../actions/userActions";
 import { connect } from "react-redux";
 import "./sdashboard.css";
+import LogoSynat from "../components/img/logo.jpeg";
+
+
 
 function Sidebar(props) {
   const Centre = props.Centre;
@@ -18,18 +21,13 @@ function Sidebar(props) {
       
       <nav className="navigation ">
         <ul>
-          <li>
-            <a href="/studentHome">
-              <img src='../../public/img/logo.jpeg' alt></img>
-              <img
-                className="imgbox"
-                src="public/imgs/logo.jpeg"
-                href="/home"
-                alt=""
-              ></img>
-              <h1 className="title"><a href="">SYNAT</a></h1>
+        <a href="/studentHome">
+            <img src={LogoSynat} 
+            alt="SYNAT"
+            width="150" 
+            height="100"/>
             </a>
-          </li>
+            <br/>
 
           <li>
             <a href="/NoticeBoard">
@@ -43,15 +41,15 @@ function Sidebar(props) {
           <li>
             <a href="/classes">
               <span className="icon">
-                <ion-icon name="school-outline"></ion-icon>
+                <ion-icon name="book-outline"></ion-icon>
               </span>
-              <span className="title">Classes</span>
+              <span className="title">My Modules</span>
             </a>
           </li>
           <li>
             <a href="/offered">
               <span className="icon">
-                <ion-icon name="book-outline"></ion-icon>
+                <ion-icon name="school-outline"></ion-icon>
               </span>
               <span className="title">Add module</span>
             </a>

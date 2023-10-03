@@ -114,37 +114,7 @@ return (
       </div>
     </div>
  
-    {/* <br/>
-    <div
-      className="main class p-5 text-center center-block "
-      style={{ paddingLeft: "30" }}
-    >
-     <div className="cardHeader ">
-      <h2 className="mb-5">Unallocated Modules</h2>
-      </div>
-      <div className=" d-grid gap-2  ">
-        <div className="cardHeader">
-          <div className="cardBox">
-            {unAllocData.map((getUnAmod) => (
-              <a href="/unallocated/" >
-                <div className="card">
-                  <div>
-                    <div className="cardName">{getUnAmod.name}</div>
-                  </div>
-
-                  <div className="iconBx">
-                  <button className="btn-md btn-secondary">
-                            Unallocated
-                      </button>                 
-               </div>
-
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div> */}
+    
   </React.Fragment>
 );
 }

@@ -74,7 +74,9 @@ export default function ViewApplication() {
                             <p className="text-left"><b>Name:</b> {tutorData.name} </p>
                             <p className="text-left"><b>Surname:</b> {tutorData.surname}</p>
                             <p className="text-left"><b>Qualifications:</b> {tutorData.qualification}</p>
-                            <p className="text-right"><b>Academic Record:</b> {tutorData.academicRecord} </p>
+                            <p className="text-right"><b>Academic Record:</b>
+                            
+                            <a href={"data:file/pdf;base64," + tutorData.academicRecord} download={tutorData.name+"__"+tutorData.email+".pdf"}>Record</a> </p>
                             <p className="text-sm-left"><b>Email:</b> {tutorData.email}</p>
                             <p className="text-sm-left"><b>Experience:</b> {tutorData.experience}</p>
                         </div>

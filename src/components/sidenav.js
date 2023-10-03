@@ -2,6 +2,7 @@ import React from "react";
 import { removeProfile } from "../actions/userActions";
 import { connect } from "react-redux";
 import "./sdashboard.css";
+import LogoSvgSynat from "../components/img/logo.jpeg";
 
 function Sidenav(props) {
   const TCentre = props.TCentre;
@@ -12,31 +13,19 @@ function Sidenav(props) {
     <div>
       <nav className="navigation">
         <ul>
-          <li>
-            <a href="/tutorhome">
-              <img
-                className="imgbox"
-                src="public/imgs/logo.jpeg"
-                href="/home"
-                alt=""
-              ></img>
-              <h1 className="title">SYNAT</h1>
+        <a href="/tutorhome">
+            <img src={LogoSvgSynat} 
+            alt="SYNAT"
+            width="150" 
+            height="100"/>
             </a>
-          </li>
+            <br/>
 
-          <li>
-            <a href="/home">
-              <span className="icon">
-                <ion-icon name="home-outline"></ion-icon>
-              </span>
-              <span className="title">Home</span>
-            </a>
-          </li>
-
+    
           <li>
             <a href="/mystudents">
               <span className="icon">
-                <ion-icon name="school-outline"></ion-icon>
+                <ion-icon name="people-outline"></ion-icon>
               </span>
               <span className="title">My Students</span>
             </a>
@@ -45,7 +34,7 @@ function Sidenav(props) {
           <li>
             <a href="/mymodules">
               <span className="icon">
-                <ion-icon name="mark-outline"></ion-icon>
+                <ion-icon name="book-outline"></ion-icon>
               </span>
               <span className="title">My Modules</span>
             </a>
@@ -53,7 +42,7 @@ function Sidenav(props) {
           <li>
             <a href="/toTutor">
               <span className="icon">
-                <ion-icon name="meeting-outline"></ion-icon>
+                <ion-icon name="school-outline"></ion-icon>
               </span>
               <span className="title">All Modules</span>
             </a>
